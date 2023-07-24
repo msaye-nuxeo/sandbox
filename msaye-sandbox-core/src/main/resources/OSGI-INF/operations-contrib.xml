@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.msaye.sandbox.operations">
+
+  <extension point="operations" target="org.nuxeo.ecm.core.operation.OperationServiceComponent">
+    <operation class="org.nuxeo.msaye.sandbox.operations.SaveWorkflowVariables"/>
+  </extension>
+
+</component>

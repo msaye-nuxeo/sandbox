@@ -1,4 +1,4 @@
-package org.nuxeo.msaye.sandbox;
+package org.nuxeo.msaye.sandbox.enrichers;
 
 import static org.nuxeo.ecm.core.io.registry.reflect.Instantiations.SINGLETON;
 import static org.nuxeo.ecm.core.io.registry.reflect.Priorities.REFERENCE;

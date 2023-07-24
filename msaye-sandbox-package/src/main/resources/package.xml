@@ -1,11 +1,11 @@
 <!-- See documentation at http://doc.nuxeo.com/x/HgIz -->
-<package type="addon" name="sandbox-package" version="@VERSION@">
-  <title>Sandbox package</title>
+<package type="addon" name="msaye-sandbox-package" version="@VERSION@">
+  <title>msaye sandbox package</title>
   <description>
-    <p>Nuxeo Sandbox Package.</p>
+    <p>msaye Sandbox Package</p>
   </description>
   <!-- <home-page>http://doc.nuxeo.com/</home-page> -->
-  <vendor>Nuxeo</vendor>
+  <vendor>msaye</vendor>
   <installer restart="true" />
   <uninstaller restart="true" />
   <!-- <hotreload-support>false</hotreload-support> -->
