@@ -1,0 +1,132 @@
+version: "3.8"
+
+# Notes
+# - Using v2 spec for "restart" due to potential incompatibility with docker engine version
+#   See: https://github.com/docker/compose/issues/8756
+#   i.e. https://docs.docker.com/compose/compose-file/compose-file-v2/#restart
+#   c.f. https://docs.docker.com/compose/compose-file/deploy/#restart_policy
+#
+# Add to local hosts file:
+#   127.0.0.1     bulk.localhost elasticsearch.bulk.localhost mongo.bulk.localhost nginx.bulk.localhost
+#   127.0.0.1     nuxeo-migrate.bulk.localhost
+#   127.0.0.1     nuxeo-process.bulk.localhost
+#   127.0.0.1     nuxeo-source.bulk.localhost
+#   127.0.0.1     nuxeo-target.bulk.localhost
+
+services:
+
+  # Nginx Service (Reverse Proxy)
+
+# nginx:
+    # Uncomment following line to run in debug mode
+#   command: [ "nginx-debug", "-g", "daemon off;" ]
+#   container_name: ${APP_NAME}-nginx
+#   depends_on:
+#     - nuxeo-source
+#   expose:
+#     - 8080
+#   hostname: nginx.${APP_NAME}.localhost
+#   image: nginx:latest
+#   ports:
+#     - "8080:8080"
+#   restart: "unless-stopped"
+#   restart: "no"
+#   volumes:
+#     - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:rw
+#     - ./nginx/init:/docker-entrypoint.d/:rw
+#     - ./nginx/templates:/etc/nginx/templates/:rw
+
+  # Elasticsearch Service
+
+  elasticsearch:
+#   build:
+#     args:
+#       - "ELASTIC_VERSION=${ELASTIC_VERSION}"
+#     context: .
+#     dockerfile: es/Dockerfile
+    container_name: ${APP_NAME}-elasticsearch
+    environment:
+      - bootstrap.memory_lock=true
+      - cluster.name=nuxeoCluster
+      - discovery.type=single-node
+      - http.port=9200
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#   expose:
+#     - 9200
+#     - 9300
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-f", "http://localhost:9200/_cat/health?h=status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    hostname: elasticsearch.${APP_NAME}.localhost
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
+    ports:
+      - "9200:9200"
+#   restart: "always"
+    restart: "no"
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+
+  # MongoDB Service
+
+  mongo:
+    container_name: ${APP_NAME}-mongo
+#   expose:
+#     - 27017
+    hostname: mongo.${APP_NAME}.localhost
+    image: mongo:${MONGO_VERSION}
+    ports:
+      - "27017:27017"
+#   restart: "unless-stopped"
+    restart: "no"
+    volumes:
+      - mongo-data:/data/db
+
+  # Nuxeo Services
+
+  nuxeo:
+    container_name: ${APP_NAME}-nuxeo
+    depends_on:
+      - elasticsearch
+      - mongo
+    environment:
+      - NUXEO_CLID=${NUXEO_CLID}
+      - NUXEO_DEV=${NUXEO_DEV}
+      - NUXEO_PACKAGES=${NUXEO_PACKAGES}
+#    expose:
+#      - "${NUXEO_PORT}" # HTTP
+#      - 1089 # JMX port
+#      - 8787 # Remote Java debugging
+    hostname: nuxeo.${APP_NAME}.localhost
+    image: docker-private.packages.nuxeo.com/nuxeo/nuxeo:2021
+    ports:
+      - "${NUXEO_PORT}:${NUXEO_PORT}"
+#      - "1089:1089"
+#      - "8787:8787"
+#   restart: "unless-stopped"
+    restart: "no"
+    volumes:
+      - ./nuxeo/conf:/etc/nuxeo/conf.d/:ro
+      - ./nuxeo/init:/docker-entrypoint-initnuxeo.d/:rw
+      - /usr/bin/docker:/usr/bin/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - nuxeo-data:/var/lib/nuxeo:rw
+      - nuxeo-log:/var/log/nuxeo:rw
+#     - nuxeo-stream:/opt/nuxeo/server/stream:rw
+      # Optional, makes container startup faster after the first time
+#     - ./nuxeo_store:/opt/nuxeo/server/packages/store
+      # Makes things pretty slow, uncomment with caution; useful for debugging
+#     - ./nuxeo_war:/opt/nuxeo/server/nxserver/nuxeo.war:rw
+
+volumes:
+  es-data:
+  mongo-data:
+  nginx-conf:
+  nuxeo-data:
+  nuxeo-log:
+# nuxeo-stream:

@@ -1,0 +1,48 @@
+# Environment Variables for Nuxeo application
+
+# Instructions:
+#  1. Copy env_sample to .env before starting docker compose
+#  2. Add per-user configuration below i.e. STUDIO_TOKEN and STUDIO_USERNAME
+#  3. Register each Nuxeo instance (generate a NUXEO_CLI)
+#     > ./gen_clid.sh <studio-id> <env-var>
+#     e.g.
+#     > ./gen_clid.sh msaye-SANDBOX NUXEO_CLID
+#  4. Start Docker Compose
+#     > docker compose up
+
+# Application name
+APP_NAME=sandbox
+
+# Docker Compose variables
+# COMPOSE_PROFILES=
+COMPOSE_PROJECT_NAME=${APP_NAME}
+
+# Service versions
+ELASTIC_VERSION=7.9.3
+MONGO_VERSION=4.4
+
+# Nuxeo platform variables
+NUXEO_DEV=true
+NUXEO_IMAGE=docker-private.packages.nuxeo.com/nuxeo/nuxeo:2021
+NUXEO_VERSION=2021
+
+NUXEO_PACKAGES=marketplace-disable-studio-snapshot-validation
+NUXEO_PACKAGES=${NUXEO_PACKAGES} nuxeo-jsf-ui
+NUXEO_PACKAGES=${NUXEO_PACKAGES} nuxeo-web-ui
+NUXEO_PACKAGES=${NUXEO_PACKAGES} platform-explorer
+NUXEO_PACKAGES=${NUXEO_PACKAGES} msaye-SANDBOX-0.0.0-SNAPSHOT
+
+NUXEO_PORT=8081
+
+# Nuxeo instance variables
+INSTANCE_DESC=Sandbox
+INSTANCE_TYPE=dev
+
+STUDIO_PROJECT=msaye-SANDBOX
+
+# Per-User Configuration
+
+# Nuxeo Studio variables
+STUDIO_TOKEN=
+STUDIO_USERNAME=
+

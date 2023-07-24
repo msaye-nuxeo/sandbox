@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# Docker Compose env
+.env
+
 # Log file
 *.log
 
