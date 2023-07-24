@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>org.nuxeo</groupId>
     <artifactId>nuxeo-parent</artifactId>
@@ -8,10 +13,10 @@
   </parent>
 
   <groupId>org.nuxeo.msaye.sandbox</groupId>
-  <artifactId>sandbox-parent</artifactId>
+  <artifactId>msaye-sandbox-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Sandbox parent</name>
-  <description>Sandbox Project</description>
+  <name>msaye sandbox parent</name>
+  <description>msaye Sandbox Parent</description>
   <packaging>pom</packaging>
 
   <properties>
@@ -21,8 +26,8 @@
   </properties>
 
   <modules>
-    <module>sandbox-core</module>
-    <module>sandbox-package</module>
+    <module>msaye-sandbox-core</module>
+    <module>msaye-sandbox-package</module>
   </modules>
 
   <scm />
@@ -37,66 +42,18 @@
     <dependencies>
       <dependency>
         <groupId>org.nuxeo.msaye.sandbox</groupId>
-        <artifactId>sandbox-core</artifactId>
+        <artifactId>msaye-sandbox-core</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.nuxeo.msaye.sandbox</groupId>
-        <artifactId>sandbox-package</artifactId>
+        <artifactId>msaye-sandbox-package</artifactId>
         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.core</groupId>
-        <artifactId>nuxeo-core</artifactId>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <repositories>
-    <repository>
-      <id>maven-public</id>
-      <url>https://packages.nuxeo.com/repository/maven-public/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>maven-internal</id>
-      <url>https://packages.nuxeo.com/repository/maven-internal/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>nuxeo-studio</id>
-      <url>https://connect.nuxeo.com/nuxeo/site/studio/maven</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>maven-private</id>
-      <url>https://packages.nuxeo.com/repository/maven-private/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
     <repository>
       <id>hotfix-releases</id>
       <url>https://maven.nuxeo.org/nexus/content/groups/hotfix-releases-group/</url>
@@ -118,6 +75,50 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
+    <repository>
+      <id>maven-internal</id>
+      <url>https://packages.nuxeo.com/repository/maven-internal/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>maven-private</id>
+      <url>https://packages.nuxeo.com/repository/maven-private/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>maven-public</id>
+      <url>https://packages.nuxeo.com/repository/maven-public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>nuxeo-studio</id>
+      <url>https://connect.nuxeo.com/nuxeo/site/studio/maven</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
   </repositories>
 
   <pluginRepositories>
@@ -132,4 +133,5 @@
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
+
 </project>

@@ -30,10 +30,16 @@ public class LifecycleEnricherTest extends AbstractJsonWriterTest.Local<Document
 
     @Test
     public void test() throws Exception {
-        DocumentModel obj = session.getDocument(new PathRef("/"));
-        JsonAssert json = jsonAssert(obj, CtxBuilder.enrich("document", LifecycleEnricher.NAME).get());
+//      DocumentModel doc = session.getDocument(new PathRef("/"));
+        DocumentModel obj = session.createDocumentModel("/", "foo", "Document");
+        DocumentModel doc = session.createDocument(obj);
+        JsonAssert json = jsonAssert(doc, CtxBuilder.enrich("document", LifecycleEnricher.NAME).get());
+        System.out.println("doc: " + doc);
+        System.out.println("policy: " + doc.getLifeCyclePolicy());
+        System.out.println("json: " + json);
         json = json.has("contextParameters").isObject();
-//      json.properties(1);
-//        json.has(LifecycleEnricher.NAME).isObject();
+        json.properties(1);
+        json.has(LifecycleEnricher.NAME).isObject();
     }
+
 }
